@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+{{object.full_name}}
+{% endblock title %}
+
+{% block content %}
+{% include 'includes/header.html' %}
+<div class="grid-container">
+    <div class="grid-x grid-margin-x align-center">
+        <div class="cell card large-5" style="width: 300px;">
+            <div class="card-divider">
+              {{object.get_job_display}} <!--Leyendo valores del diccionario de tipo CHOISES-->
+            </div>
+            {% if object.avatar %}
+            <img src="{{object.avatar.url}}">
+            {% else %}
+            <img src="{% static 'img/empresa1.jpg' %}">
+            {% endif %}
+            <div class="card-section">
+              <h4>{{object.full_name}}</h4>
+              <h5>{{titulo}}</h5> <!-- Ejemplo de mostrar un campo ajeno al modelo enviado desde la vista-->
+              <p>{{object.first_name}}</p>
+              <p>{{object.last_name}}</p>
+              <p>{{object.departamento.short_name}}</p>
+              <p><span class="label">Habilidades: </span></p>
+              <ul>
+              {% for h in object.habilidades.all  %}
+              <li>{{h.habilidad}}</li> 
+              {% endfor %}
+              </ul>  
+              
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+
+

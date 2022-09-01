@@ -1,0 +1,7 @@
+<h1>Lista de empleados por puesto de trabajo</h1>
+{{ object_list }}
+<ul>
+{% for item in object_list %}
+    <li>{{ item }}</li>
+{% endfor %}
+</ul>

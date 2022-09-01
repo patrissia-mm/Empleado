@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% block content %}
+{% include 'includes/header.html' %}
+<div class="grid-container">
+  <div class="grid-x">
+    <h1 class="cell">Lista de Empleados</h1>
+    <div class="cell">
+        <table>
+            <thead>
+              <tr>
+                <th width="100">ID</th>
+                <th width="250">NOMBRES</th>
+                <th width="250">APELLIDOS</th>
+                <th>DEPARTAMENTO</th>
+                <th width="150" colspan="2">ACCIÓN</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for item in empleados %}  
+              <tr>
+                <td>{{ item.id }}</td>
+                <td>{{ item.first_name}}</td>
+                <td>{{ item.last_name}}</td>
+                <td>{{ item.departamento }}</td>
+                <td><a class="button warning" href="{% url 'empleados_app:actualizar' item.id %}">Editar</a></td>
+                <td><a class="button alert" href="{% url 'empleados_app:eliminar' item.id %}">Eliminar</a></td>
+              </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+    </div>
+
+    <div class="grid-x">
+      <!--Sí existe paginación -->
+      {% if is_paginated %}
+      <nav aria-label="Pagination">
+        <ul class="pagination">
+          {% if page_obj.has_previous %}
+          <li class="pagination-previous"><a href="?page={{page_obj.previous_page_number}}">Anterior</a><span class="show-for-sr">page</span></li>
+          {% endif %}
+          
+          {% for pagina in paginator.page_range %}
+          
+            {% if pagina == page_obj.number %} 
+            <li class="current"><span class="show-for-sr">You're on page</span>{{pagina}}</li>
+            {% else %}
+            <li><a href="?page={{pagina}}">{{pagina}}</a></li>
+            {% endif %}
+          
+          {% endfor %}
+          
+          {% if page_obj.has_next %}
+          <li class="pagination-next"><a href="?page={{page_obj.next_page_number}}">Siguiente</a></li>
+          {% endif %}
+        </ul>
+      </nav>
+      {% endif %}
+      
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
